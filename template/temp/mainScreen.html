@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>User Control Panel</title>
+    <style>
+    	.bolds
+    	{
+    		font-weight: bolder;
+    	}
+    </style>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    
+    <link href={% static "css/demo.css" %} rel="stylesheet">
+	<link href={% static "css/modal.css" %} rel="stylesheet">
+    <link href= {% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet" type="text/css" /> 
+	
+	<link href={% static "bootstrap/css/icons.css" %} rel="stylesheet" type="text/css" />
+    <!-- FontAwesome 4.3.0 -->
+    <link href={% static "bootstrap/css/file1.css" %} rel="stylesheet" type="text/css" />
+    <!-- Ionicons 2.0.0 -->
+    <!--link href={% static "bootstrap/css/file.css" %}  rel="stylesheet" type="text/css" />    
+    <!-- Theme style -->
+    <link href={% static "dist/css/AdminLTE.min.css" %} rel="stylesheet" type="text/css" />
+    <!-- AdminLTE Skins. Choose a skin from the css/skins 
+         folder instead of downloading all of them to reduce the load. -->
+    <link href={% static "dist/css/skins/_all-skins.min.css" %} rel="stylesheet" type="text/css" />
+    <!-- iCheck -->
+    <link href={% static "plugins/iCheck/flat/blue.css" %} rel="stylesheet" type="text/css" />
+    <!-- Morris chart -->
+    <link href={% static "plugins/morris/morris.css" %} rel="stylesheet" type="text/css" />
+    <!-- jvectormap -->
+    <link href={% static "plugins/jvectormap/jquery-jvectormap-1.2.2.css" %} rel="stylesheet" type="text/css" />
+    <!-- Date Picker -->
+    <link href={% static "plugins/datepicker/datepicker3.css" %} rel="stylesheet" type="text/css" />
+    <!-- Daterange picker -->
+    <link href={% static "plugins/daterangepicker/daterangepicker-bs3.css" %} rel="stylesheet" type="text/css" />
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link href={% static "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" %} rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body class="skin-purple sidebar-collapse">
+    <div class="wrapper">
+      
+      <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo"><b>User </b>LTE</a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+         
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+             
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src={% static "dist/img/"  %}{{filename}} class="user-image" alt="User Image"/>
+                  <span class="hidden-xs">{{ username }}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src={% static "dist/img/"  %}{{ filename }} class="img-circle" alt="User Image" />
+                    <p>
+                      {{ username }} - {{ about1 }}
+                      <small>Member since {{ about2 }}</small>
+                    </p>
+                  </li>
+                  <!-- Menu Body -->
+                 
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    
+                    <div class="pull-right">
+                      <a href="#" class="btn btn-default btn-flat" id="logout">Sign out</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- Left side column. contains the logo and sidebar -->
+     
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            Dashboard
+            <small>Control panel</small>
+          </h1>
+         
+        </section>
+
+        <!-- Main content -->
+		  <section class="content">
+			 <div class="row">
+				<section class="col-lg-7 connectedSortable">
+					 <div class="box box-primary">
+                <div class="box-header">
+                  <i class="ion ion-clipboard"></i>
+                  <h3 class="box-title">To Do List</h3>
+                  <div class="box-tools pull-right">
+                  	{% if range != 0 %}
+                    <ul class="pagination pagination-sm inline" id="counter" >
+                    	
+                      <li><a href="#" id="lquao">&laquo;</a></li>
+                      {% for x in count %}
+                      {% if x == 0 %}
+                      <li><a href="#" id="todo{{ x|add:1 }}" class="bolds">{{ x|add:1 }}</a></li>
+                      {% else %}
+                     
+                      <li><a href="#" id="todo{{ x|add:1 }}">{{ x|add:1 }}</a></li>
+                      
+                      {% endif %}
+                      {% endfor %}
+                      <li><a href="#" id="rquao">&raquo;</a></li>
+                    </ul>
+                                          {% endif %}
+
+                  </div>
+                </div><!-- /.box-header -->
+
+				 <div class="box-body">
+					<ul class="todo-list">
+						{% if range == 0  %}
+						<li>
+							<span class="text">No Tasks Found!!!</span>
+						</li>
+						{% else %}
+						 {% for a in tasks %}
+						<li>
+                      <!-- drag handle -->
+                     
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <!-- checkbox -->
+                     
+                       <input type="radio" id="radio{{ a.id }}" value="{{ a.id }}">
+                      
+                      <!-- todo text -->
+                      <span class="text" >{{ a.task_name }}</span>
+                      <input id="radio{{ a.id }}1" type="hidden"  />	
+                      <!-- Emphasis label -->
+                      <small class="label label-danger"><i class="fa fa-clock-o"></i>{{ a.task_time }}</small>
+                     
+                      <!-- General tools such as edit or delete-->
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+					{% endfor %}
+					
+					{% endif %}
+					</ul>
+				 </div>
+				  <div class="box-footer clearfix no-border">
+                  <a href="#modal" class="btn go" >Add item</a>
+                  <a href="#" class="btn go" id="deleteTasks" >Delete Selected Items</a>
+                  <a href="" class="btn go" >Get Your Profile</a>
+                </div>
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+				</section>
+			 </div>
+		  </section>
+      </div>
+     
+    </div><!-- ./wrapper -->
+    
+    
+    
+    <div id="modal">
+		<div class="modal-content">
+			<div class="header">
+				<h2>Add Tasks Here</h2>
+			</div>
+			<div class="copy">
+				
+
+<div class="box box-success">
+<div class="box-header">
+                  <h3 class="box-title">Task Details</h3>
+                </div><!-- /.box-header -->
+				 <div class="box-body">
+                  <form role="form">
+                  	{% csrf_token %}
+     <div class="form-group">
+                      <label>Task Name</label>
+                      <textarea class="form-control" rows="3" placeholder="Enter ..." id="task-name"></textarea>
+                    </div>
+
+	<div class="form-group" >
+	
+			 <label>Task Time</label>
+			 <input type="number" class="form-control" min=1 required placeholder="Enter Number" id="task-time">
+				</div>
+
+				<div class="form-group" >
+	
+			 <label>Task Time</label>	
+				<select class="form-control" id="time-para">
+                        <option>Minutes</option>
+                        <option>Hours</option>
+                        <option>Days</option>
+                        <option>Weeks</option>
+                      </select>
+					 
+			 
+	</div>
+	
+	<div class="form-group" >
+	
+			 <label>Task Type</label>	
+				<select class="form-control" id="task-para">
+                        <option>Home</option>
+                        <option>Work</option>
+                        <option>Personal</option>
+                        <option>Gym</option>
+                      </select>
+					 
+			 
+	</div>
+ 
+</form>
+</div>
+
+<div class="user-result">
+	
+</div>
+					</div>
+					
+   
+			</div>
+			<div class="cf footer">
+			
+				<a href="#" class="btn" id="close-button">Close</a>
+				<div class="box-footer clearfix no-border">
+				<input type="button" class="add-task-btn" id="add-task" value="Add Task" />
+				</div>
+			</div>
+		</div>
+
+ <!-- jQuery 2.1.3 -->
+    <script src={% static "plugins/jQuery/jQuery-2.1.3.min.js" %}></script>
+    <!-- jQuery UI 1.11.2 -->
+    <script src={% static "bootstrap/js/jquery.js" %} type="text/javascript"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+      $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <!-- Bootstrap 3.3.2 JS -->
+    <script src={% static "bootstrap/js/bootstrap.min.js" %} type="text/javascript"></script>    
+    <!-- Morris.js charts -->
+    <script src={% static "bootstrap/js/raphel.js" %}></script>
+    <script src={% static "plugins/morris/morris.js" %} type="text/javascript"></script>
+    <!-- Sparkline -->
+    <script src={% static "plugins/sparkline/jquery.sparkline.min.js" %} type="text/javascript"></script>
+    <!-- jvectormap -->
+    <script src={% static "plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" %} type="text/javascript"></script>
+    <script src={% static "plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %} type="text/javascript"></script>
+    <!-- jQuery Knob Chart -->
+    <script src={% static "plugins/knob/jquery.knob.js" %} type="text/javascript"></script>
+    <!-- daterangepicker -->
+    <script src={% static "plugins/daterangepicker/daterangepicker.js" %} type="text/javascript"></script>
+    <!-- datepicker -->
+    <script src={% static "plugins/datepicker/bootstrap-datepicker.js" %} type="text/javascript"></script>
+    <!-- Bootstrap WYSIHTML5 -->
+    <script src={% static "plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" %} type="text/javascript"></script>
+    <!-- iCheck -->
+    <script src={% static "plugins/iCheck/icheck.min.js" %} type="text/javascript"></script>
+    <!-- Slimscroll -->
+    <script src={% static "plugins/slimScroll/jquery.slimscroll.min.js" %} type="text/javascript"></script>
+    <!-- FastClick -->
+    <script src={% static "plugins/fastclick/fastclick.min.js" %}></script>
+    <!-- AdminLTE App -->
+    <script src={% static "dist/js/app.min.js" %} type="text/javascript"></script>
+
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src={% static "dist/js/pages/dashboard.js" %} type="text/javascript"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src={% static "dist/js/demo.js" %} type="text/javascript"></script>
+     <script type="text/javascript">
+    var item_added=false;
+    	$("#rquao").click(function(e){
+    		//alert("here");
+    		{% if range == 1 %}
+    		{% else %}
+    			var current_bold=$("a.bolds").text();
+    			var next_bold=parseInt(current_bold)+1;
+    			
+    			if(next_bold > {{ range }})
+    			{
+    			 	next_bold=1;
+    			}
+    			var data_required=(parseInt(next_bold)-1)*10;
+    			//document.getElementById("todo"+current_bold).class="";
+    			//document.getElementById("todo"+next_bold).class="bolds";
+    			//alert(document.getElementById("todo"+next_bold).text);
+    			$("#todo"+current_bold).removeClass("bolds");
+    			$("#todo"+next_bold).addClass("bolds");
+    			$(".todo-list").empty();
+    			$.ajax({
+        type:"post",
+        url:"/temp/gettask/",
+        //name:'username='+$("#user").val()+'&password='+$("#pass").val(),
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+        		data:data_required},
+        cache :false,
+        async :true,
+        success : function(res) {
+        	
+              $(".todo-list").html(res);
+              if(res=="Session Expired")
+              {
+              	window.location.href="/temp/"
+              }
+              
+              return this;
+             
+            }  	
+        });
+        e.preventDefault();
+    			 
+    		{% endif %}
+    	});
+    	
+    	$("#lquao").click(function(e){
+    		{% if range	== 1 %}
+    		{% else %}
+    			var current_bold=$("a.bolds").text();
+    			var next_bold=parseInt(current_bold)-1;
+    			
+    			if(next_bold < 1)
+    			{
+    			 	next_bold={{ range }};
+    			}
+    			var data_required=(parseInt(next_bold)-1)*10;
+    			$("#todo"+current_bold).removeClass("bolds");
+    			$("#todo"+next_bold).addClass("bolds");
+    			$(".todo-list").empty();
+    			$.ajax({
+        type:"post",
+        url:"/temp/gettask/",
+        //name:'username='+$("#user").val()+'&password='+$("#pass").val(),
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+        		data:data_required},
+        cache :false,
+        async :true,
+        success : function(res) {
+        	
+              $(".todo-list").html(res);
+              if(res=="Session Expired")
+              {
+              	window.location.href="/temp/"
+              }
+              
+              return this;
+             
+            }  	
+        });
+        e.preventDefault();
+    		{% endif %}
+    	});
+    	
+    	$("#add-task").click(function(e){
+    		//alert($(".form-control option:selected").text());
+    		item_added=true;
+    		if(!$("#task-name").val() || !$("#task-time").val())
+				{
+					
+					$(".user-result").hide();
+					
+					$(".user-result").text("Please Enter Task Details First");
+					$( ".user-result" ).toggle( "slide" );
+						
+				}
+				else
+				{
+					//alert('username='+$("#user").val()+'&password='+$("#pass").val());
+					  $(".user-result").hide();
+					$.ajax({
+        type:"post",
+        url:"/temp/addtask/",
+        //name:'username='+$("#user").val()+'&password='+$("#pass").val(),
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+        		taskname:$("#task-name").val(),
+        		tasktime:$("#task-time").val(),
+        		timepara:$("#time-para option:selected").text(),
+        		tasktype:$("#task-para option:selected").text()},
+        cache :false,
+        async :true,
+        success : function(res) {
+        	
+              $(".user-result").html(res);
+              
+              if(res=="Session Expired")
+              {
+              	window.location.href="/temp/"
+              }
+              
+              return this;
+             
+            }  	
+        });
+        e.preventDefault(); 
+					  $( ".user-result" ).toggle( "slide" );
+				}
+				
+    	});
+    	
+    	$("[id^=todo]").click(function(e){
+    		var current_bold=$("a.bolds").text();
+    		var clicked_bold=$(this).text();
+    		$("#todo"+current_bold).removeClass("bolds");
+    		$("#todo"+clicked_bold).addClass("bolds")
+    		var data_required=(parseInt(clicked_bold)-1)*10;
+    		
+    		$.ajax({
+        type:"post",
+        url:"/temp/gettask/",
+        //name:'username='+$("#user").val()+'&password='+$("#pass").val(),
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+        		data:data_required},
+        cache :false,
+        async :true,
+        success : function(res) {
+        	
+              $(".todo-list").html(res);
+              if(res=="Session Expired")
+              {
+              	window.location.href="/temp/"
+              }
+              
+              return this;
+             
+            }  	
+        });
+        e.preventDefault();
+    		
+    	});
+    	
+    	
+    $("#close-button").click(function(e){
+    	var len=history.length;   
+   			history.go(-len); 
+   		window.location.reload();
+    });
+    
+    
+    $("#check").click(function(){
+    	alert($("#task-id").val());
+    });
+    
+    $("#logout").click(function(e){
+    	$.ajax({
+        type:"post",
+        url:"/temp/logout/",
+        //name:'username='+$("#user").val()+'&password='+$("#pass").val(),
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        cache :false,
+        async :true,
+        success : function(res) {
+        	
+             
+              alert(res);
+              if(res=="OK")
+              {
+              	window.location.href="/temp/"
+              }
+              
+              return this;
+             
+            }  	
+        });
+        e.preventDefault(); 
+				
+			
+				
+    	
+    });
+    $("#deleteTasks").click(function(){
+    	var m=$('input:radio[id^="radio"]:checked');
+    	var n=m.length;
+    	if(n==0)
+    	{
+    		alert("please select some tasks to delete");
+    	}
+    	else
+    	{
+    		var m=$(".checkedd").toArray();
+    		var delete_data="";
+    	for(var i=0;i<n;i++)
+    	{
+    		if(i!=n-1)
+    		{
+    		delete_data+=m[i].value+"$";
+    		}
+    		else
+    		{
+    			delete_data+=m[i].value;
+    		}
+    	}
+    	$.ajax({
+        type:"post",
+        url:"/temp/deletetask/",
+        //name:'username='+$("#user").val()+'&password='+$("#pass").val(),
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+        		delete:delete_data},
+        cache :false,
+        async :true,
+        success : function(res) {
+        	
+             
+              alert(res);
+              var len=history.length;   
+   			history.go(-len); 
+   		window.location.reload();
+             
+              
+              return this;
+             
+            }  	
+        });
+        e.preventDefault(); 
+    	}
+    	
+    });
+    $("[id^=radio]").click(function(){
+    	 $(this).toggleAttr('checked');
+    //$(this).blur();
+    });
+    
+    jQuery.fn.toggleAttr = function(attr) {
+    return this.each(function() {
+        var $this = $(this);
+        if($this.attr(attr)){
+           $this.removeAttr(attr);
+           $this.removeClass("checkedd");
+        } else {
+          $this.attr(attr, attr);      
+          $this.addClass("checkedd");    
+        } 
+    });
+    };
+    </script>
+   
+    
+   
+  </body>
+</html>
