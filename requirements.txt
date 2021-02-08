@@ -2,7 +2,7 @@ beautifulsoup4==4.3.0
 Django==1.7.5
 dragonfly==0.6.5
 dropbox==2.1.0
-httplib2==0.9
+httplib2==0.19.0
 mechanize==0.2.5
 MySQL-python==1.2.5
 oauthlib==0.7.2
